@@ -1,6 +1,7 @@
 package com.sd.spartan.flickagram;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,7 +45,19 @@ public class FlickerAdapter extends RecyclerView.Adapter<FlickerAdapter.FlickerV
 
         Glide.with(mCtx)
                 .load(flickerModel.getUrl_h())
+                .placeholder(R.drawable.authen)
                 .into(holder.imageView);
+
+        int tempPos = position ;
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mCtx, DetailActivity.class) ;
+                intent.putExtra("pos", tempPos+"") ;
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                mCtx.startActivity(intent);
+            }
+        });
 
     }
 
@@ -53,7 +66,7 @@ public class FlickerAdapter extends RecyclerView.Adapter<FlickerAdapter.FlickerV
         return flickerList.size();
     }
 
-    class FlickerViewHolder extends RecyclerView.ViewHolder {
+    static class FlickerViewHolder extends RecyclerView.ViewHolder {
         TextView titleTV ;
         ImageView imageView;
         public FlickerViewHolder(View itemView) {

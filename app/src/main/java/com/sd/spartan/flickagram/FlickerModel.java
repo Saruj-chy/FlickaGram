@@ -1,7 +1,8 @@
 package com.sd.spartan.flickagram;
 
 public class FlickerModel {
-    String id, owner, secret, server, farm, title, ispublic, datetaken, datetakengranularity, datetakenunknown, url_h, height_h, width_h;
+    String id, owner, secret, server, farm, title, ispublic,
+            datetaken, datetakengranularity, datetakenunknown, url_h, height_h, width_h;
 
     public FlickerModel(String id, String owner, String secret, String server, String farm, String title, String ispublic, String datetaken, String datetakengranularity, String datetakenunknown, String url_h, String height_h, String width_h) {
 
@@ -70,5 +71,13 @@ public class FlickerModel {
 
     public String getWidth_h() {
         return width_h;
+    }
+
+    @Override
+    public String toString() {
+        return "FlickerModel{" +
+                "title='" + title + '\'' +
+                ", url_h='" + url_h + '\'' +
+                '}';
     }
 }
