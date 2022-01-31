@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
+import android.view.Window;
+
 import com.sd.spartan.flickagram.R;
 import com.sd.spartan.flickagram.adapter.ViewPagerHandler;
 
@@ -12,6 +14,7 @@ public class DetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_detail);
 
         ViewPager viewPager = findViewById(R.id.view_pager);
