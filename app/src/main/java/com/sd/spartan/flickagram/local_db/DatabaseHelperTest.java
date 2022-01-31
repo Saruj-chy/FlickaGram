@@ -1,4 +1,4 @@
-package com.sd.spartan.flickagram;
+package com.sd.spartan.flickagram.local_db;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -36,8 +36,7 @@ public class DatabaseHelperTest extends SQLiteOpenHelper {
                     "height_h VARCHAR," +
                     "width_h VARCHAR);"
             );
-        } catch (SQLException e) {
-//            e.printStackTrace();
+        } catch (SQLException ignored) {
         }
 
 
@@ -51,7 +50,7 @@ public class DatabaseHelperTest extends SQLiteOpenHelper {
     }
 
 
-    public boolean InsertFlickaTbl(String id, String owner, String secret, String server, String farm, String title, String ispublic, String datetaken, String datetakengranularity, String datetakenunknown, String url_h, String height_h, String width_h) {
+    public void InsertFlickaTbl(String id, String owner, String secret, String server, String farm, String title, String ispublic, String datetaken, String datetakengranularity, String datetakenunknown, String url_h, String height_h, String width_h) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("id", id);
@@ -68,8 +67,7 @@ public class DatabaseHelperTest extends SQLiteOpenHelper {
         contentValues.put("height_h", height_h);
         contentValues.put("width_h", width_h);
 
-        long l = db.insert(FLICKAGRAM_TBL, null, contentValues);
-        return l != -1;
+        db.insert(FLICKAGRAM_TBL, null, contentValues);
     }
 
 
@@ -77,7 +75,6 @@ public class DatabaseHelperTest extends SQLiteOpenHelper {
     public Cursor checkTable(String name, String id) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor res = null;
-
 
         switch (name) {
             case "all":
@@ -92,7 +89,7 @@ public class DatabaseHelperTest extends SQLiteOpenHelper {
 
     public void DeleteFlickaTbl() {
         SQLiteDatabase db1 = this.getWritableDatabase();
-        long l = db1.delete(FLICKAGRAM_TBL, "", new String[]{});
+        db1.delete(FLICKAGRAM_TBL, "", new String[]{});
     }
 
 }

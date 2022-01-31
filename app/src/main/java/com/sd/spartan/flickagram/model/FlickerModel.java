@@ -1,4 +1,4 @@
-package com.sd.spartan.flickagram;
+package com.sd.spartan.flickagram.model;
 
 public class FlickerModel {
     String id, owner, secret, server, farm, title, ispublic,
@@ -73,11 +73,5 @@ public class FlickerModel {
         return width_h;
     }
 
-    @Override
-    public String toString() {
-        return "FlickerModel{" +
-                "title='" + title + '\'' +
-                ", url_h='" + url_h + '\'' +
-                '}';
-    }
+
 }

@@ -1,36 +1,37 @@
-package com.sd.spartan.flickagram;
+package com.sd.spartan.flickagram.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.sd.spartan.flickagram.R;
+import com.sd.spartan.flickagram.activity.DetailActivity;
+import com.sd.spartan.flickagram.model.FlickerModel;
 
 import java.util.List;
-
+@SuppressLint("StaticFieldLeak")
 public class FlickerAdapter extends RecyclerView.Adapter<FlickerAdapter.FlickerViewHolder> {
-    private Context mCtx;
-    private List<FlickerModel> flickerList;
+    private static Context mCtx;
+    private final List<FlickerModel> flickerList;
 
     public FlickerAdapter(Context mCtx, List<FlickerModel> flickerList) {
-        this.mCtx = mCtx;
+        FlickerAdapter.mCtx = mCtx;
         this.flickerList = flickerList;
     }
 
-    public void filterList(List<FlickerModel> filteredList) {
-        flickerList = filteredList;
-        notifyDataSetChanged();
-    }
-
+    @SuppressLint("InflateParams")
+    @NonNull
     @Override
-    public FlickerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public FlickerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(mCtx);
         View view = inflater.inflate( R.layout.layout_image, null );
         return new FlickerViewHolder(view);
@@ -40,24 +41,7 @@ public class FlickerAdapter extends RecyclerView.Adapter<FlickerAdapter.FlickerV
     public void onBindViewHolder(FlickerViewHolder holder, int position) {
         final FlickerModel flickerModel = flickerList.get(position);
 
-        holder.titleTV.setText(flickerModel.getTitle()) ;
-        Log.e("TAGs", "url: "+flickerModel.getUrl_h() );
-
-        Glide.with(mCtx)
-                .load(flickerModel.getUrl_h())
-                .placeholder(R.drawable.authen)
-                .into(holder.imageView);
-
-        int tempPos = position ;
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(mCtx, DetailActivity.class) ;
-                intent.putExtra("pos", tempPos+"") ;
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                mCtx.startActivity(intent);
-            }
-        });
+        holder.bind(flickerModel, position) ;
 
     }
 
@@ -75,6 +59,22 @@ public class FlickerAdapter extends RecyclerView.Adapter<FlickerAdapter.FlickerV
             titleTV = itemView.findViewById(R.id.text_title);
             imageView = itemView.findViewById(R.id.image_flicker);
 
+        }
+
+        public void bind(FlickerModel flickerModel, int position) {
+            titleTV.setText(flickerModel.getTitle()) ;
+
+            Glide.with(mCtx)
+                    .load(flickerModel.getUrl_h())
+                    .placeholder(R.drawable.flickr)
+                    .into(imageView);
+
+            itemView.setOnClickListener(view -> {
+                Intent intent = new Intent(mCtx, DetailActivity.class) ;
+                intent.putExtra("pos", position+"") ;
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                mCtx.startActivity(intent);
+            });
         }
     }
 }
